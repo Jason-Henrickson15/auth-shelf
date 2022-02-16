@@ -6,7 +6,15 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
+  const queryString = `SELECT * FROM "item";`;
+  pool.query(queryString)
+    .then(response => {
+      res.send(response.rows);
+    })
+    .catch(error => {
+      console.log(error);
+      res.sendStatus(500);
+    })
 });
 
 /**
@@ -14,6 +22,11 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   // endpoint functionality
+  const queryString = `
+    INSERT INTO "item" ("description", "image_url", "user_id")
+    VALUES ($1, $2, $3);
+  `;
+  pool.query();
 });
 
 /**
